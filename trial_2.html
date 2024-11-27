@@ -312,7 +312,24 @@
                 // ],
 
             },
-          
+            created() {
+                // Fetch the lessons data when the component is created
+                fetch("http://localhost:3000/collection/lessons")
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        console.log('Fetched data:', data); // Log fetched data
+                        this.Classes = data; // Populate the Classes array
+                    })
+                    .catch((error) => {
+                        console.error("Error Fetching the data:", error); // Log errors
+                    });
+
+            },
             methods: {
 
 
