@@ -18,9 +18,11 @@
                 <div class="logo">AFTER SCHOOL</div>
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="Search online classes and tutors">
-                <!-- search bar icon -->
+                <input type="text" v-model="searchQuery" placeholder="Search online classes and tutors" />
+                
+
             </div>
+            
 
             <button class="cart-button" :disabled="cartItemCount === 0" v-on:click="showCheckout">
                 <span class="fas fa-cart-plus"></span> Checkout {{cartItemCount}}
@@ -170,6 +172,7 @@
         let webstore = new Vue({
             el: '#app', // Mount point for Vue
             data: {
+                searchQuery:'',
                 showClasses: true, // Display classes section
                 sitename: 'After School Club For Kids', // Site name
                 sortOption: 'subject', // Default sort option
@@ -193,6 +196,7 @@
                     phone: ''
                 },
                 Classes: []
+                
 
 
             },
@@ -329,6 +333,30 @@
                 this.errors.phone = "";
             }
         },
+
+        searchClasses() {
+        if (!this.searchQuery.trim()) {
+            alert('Please enter a search term');
+            return;
+        }
+
+        fetch(`http://localhost:3000/collection/search?q=${this.searchQuery}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Search Results:', data); // Log search results
+                this.Classes = data; // Update the Classes array with search results
+            })
+            .catch(error => {
+                console.error('Error fetching search results:', error);
+                alert('There was an error fetching search results. Please try again.');
+            });
+    },
+
 
         // Check if user can enroll in class (based on available spots)
         canEnroll(classItem) {
