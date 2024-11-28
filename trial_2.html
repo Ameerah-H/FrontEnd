@@ -19,7 +19,8 @@
             </div>
             <div class="search-bar">
                 <input type="text" v-model="searchQuery" placeholder="Search online classes and tutors" />
-                
+                <i class="fas fa-search" @click="searchClasses" style="cursor: pointer;"></i>
+                <p v-if="Classes.length === 0">No classes found for your search.</p>
 
             </div>
             
