@@ -32,7 +32,20 @@ input{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
+    
 
+}
+.search-bar p{
+    font-family: "Nunito", sans-serif;
+    font: 20px;
+    margin-top: 140px; /* Adjusts spacing below the search bar */
+    
+}
+
+.starsImage {
+    width: 100%;     
+    height: 300px;     
+    object-fit: cover; 
 }
 
 .logo {
@@ -91,12 +104,35 @@ button {
     padding: 5px;      
 
 }
+.checkout-cart strong {
+    width: 120px; 
+    /* Fixed width for alignment */
+    margin-right: 10px;
+    text-align: right;
+}
+
+/* Input fields */
+.checkout-cart input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 6px;
+    font-size: 15px;
+    min-width: 100px;
+    max-width: 800px;
+}
+/* Error messages */
+.checkout-cart span {
+    margin-left: 10px;
+    font-size: 12px;
+}
 
 .classes-section {
     width: auto;
     display: flex;
     flex-wrap: wrap;
 }
+
 
 .class-card {
     background-color: #FAF9F9;
