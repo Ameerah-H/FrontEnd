@@ -21,7 +21,8 @@
                 </div>
             </div>
             <div class="search-bar">
-                <input type="text" v-model="searchQuery" placeholder="Search online classes and tutors" />
+                <input type="text" v-model="searchQuery" placeholder="Search online classes and tutors"
+                    v-on:input="onSearchInput" />
                 <i class="fas fa-search" v-on:click="searchClasses" style="cursor: pointer;"></i>
                 <p v-if="Classes.length === 0">No classes found for your search.</p>
 
@@ -199,7 +200,8 @@
                     lastName: '',
                     phone: ''
                 },
-                Classes: []
+                Classes: [],
+                debounceTimer: null, // Timer for debounce
 
 
 
@@ -337,11 +339,21 @@
                         this.errors.phone = "";
                     }
                 },
+                onSearchInput() {
+                    // Clear previous debounce timer
+                    clearTimeout(this.debounceTimer);
+
+                    // Debounce to delay search until user stops typing for 300ms
+                    this.debounceTimer = setTimeout(() => {
+                        this.searchClasses();
+                    }, 300);
+                },
 
                 searchClasses() {
                     if (!this.searchQuery.trim()) {
                         alert('Please enter a search term');
                         return;
+
                     }
 
                     fetch(`http://localhost:3000/collection/search?q=${this.searchQuery}`)
@@ -360,6 +372,9 @@
                             alert('There was an error fetching search results. Please try again.');
                         });
                 },
+
+                
+
 
 
                 // Check if user can enroll in class (based on available spots)
